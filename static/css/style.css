@@ -1,0 +1,40 @@
+/* Custom styles for the Car Damage Insurance Predictor app */
+
+.feature-box {
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-box img {
+    margin-bottom: 1rem;
+}
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-header {
+    border-radius: 0 !important;
+}
+
+.progress {
+    border-radius: 25px;
+}
+
+.progress-bar {
+    border-radius: 25px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.img-fluid {
+    max-height: 500px;
+    width: auto;
+} 

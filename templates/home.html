@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Insurance Prediction</title>
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+
+    <!-- FontAwesome Icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <style>
+        /* Hero Section Background */
+        .hero {
+            background: url('static/images/bg.jpg') center / cover no-repeat;
+        }
+
+        /* Title Styling */
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Subtitle Styling */
+        .subtitle {
+            font-size: 1.5rem;
+            color: #f5f5f5;
+        }
+
+        /* Upload Box */
+        .file-upload-box {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        .bd-footer-link {
+            background: #222;
+            padding: 30px 0;
+            color: white;
+            text-align: center;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            padding: 20px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Hero Section -->
+<section class="hero is-fullheight">
+    <div class="hero-body has-text-centered">
+        <div class="container">
+            <h1 class="title">
+                Car Insurance Prediction Based on Damage Detection
+            </h1>
+            <p class="subtitle">
+                Powered by <strong>Python & Deep Learning</strong>
+            </p>
+
+            <!-- File Upload Section -->
+            <div class="file-upload-box">
+                <form action="/classify" method="post" enctype="multipart/form-data">
+                    <div class="file has-name is-centered">
+                        <label class="file-label">
+                            <input class="file-input" type="file" id="image" name="image">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose an image…
+                                </span>
+                            </span>
+                            <span class="file-name" id="file-name">
+                                No file selected
+                            </span>
+                        </label>
+                    </div>
+
+                    <br>
+                    <input type="submit" value="Predict Insurance" class="button is-primary is-large">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Section -->
+<section class="section">
+    <div class="container has-text-centered">
+        <figure class="image is-128x128 is-inline-block">
+            <img src="static/images/bg.jpg" alt="Car Damage Detection">
+        </figure>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<section class="bd-footer-link">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-4">
+                <div class="contact-box">
+                    <p class="title is-4">Contact</p>
+                    <p>Email: support@insurancepredict.com</p>
+                    <p>Phone: +123 456 7890</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- External Script -->
+<script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Car Damage Assessment</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 2rem;
+                background-color: #f8f9fa;
+            }
+            .card {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .header-image {
+                max-height: 200px;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h2>Car Damage Assessment</h2>
+                        </div>
+                        <div class="card-body">
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            {% for message in messages %}
+                                                <li>{{ message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                            
+                            <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="mb-4">
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Select a car damage image:</label>
+                                    <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="car_make" class="form-label">Car Make:</label>
+                                        <input type="text" class="form-control" id="car_make" name="car_make" placeholder="e.g., Toyota, BMW">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="car_model" class="form-label">Car Model:</label>
+                                        <input type="text" class="form-control" id="car_model" name="car_model" placeholder="e.g., Camry, 3-Series">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="car_year" class="form-label">Car Year:</label>
+                                        <input type="number" class="form-control" id="car_year" name="car_year" placeholder="e.g., 2020" min="1900" max="2099">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="car_value" class="form-label">Car Value (INR):</label>
+                                        <input type="number" class="form-control" id="car_value" name="car_value" value="1875000" min="75000" max="75000000">
+                                        <small class="form-text text-muted">Approx. value in INR</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Analyze Damage</button>
+                                </div>
+                            </form>
+                            
+                            <div class="mt-4">
+                                <h5>How it works:</h5>
+                                <ol>
+                                    <li>Upload a photo of the car damage</li>
+                                    <li>Enter car details (make, model, year, value)</li>
+                                    <li>Get instant damage assessment and repair cost estimate</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    

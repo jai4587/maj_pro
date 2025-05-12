@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Damage Insurance Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="text-center">Car Damage Insurance Predictor</h1>
+                        <p class="text-center lead">Upload a photo of car damage to predict insurance claim amount in INR</p>
+                    </div>
+                    <div class="card-body">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        {% for message in messages %}
+                                            <li>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                        
+                        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="mb-4">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Select a car damage image:</label>
+                                <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Analyze Damage</button>
+                            </div>
+                        </form>
+                        
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <div class="feature-box">
+                                    <img src="https://img.icons8.com/color/96/000000/artificial-intelligence.png"/>
+                                    <h4>AI-Powered</h4>
+                                    <p>Uses advanced ML algorithms to analyze damage</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="feature-box">
+                                    <img src="https://img.icons8.com/color/96/000000/data-configuration.png"/>
+                                    <h4>GAN Technology</h4>
+                                    <p>Generates synthetic images to improve accuracy</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="feature-box">
+                                    <img src="https://img.icons8.com/color/96/000000/speedometer.png"/>
+                                    <h4>Instant Results</h4>
+                                    <p>Get insurance estimates in seconds (₹)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center text-muted">
+                        &copy; 2025 Car Damage Insurance Predictor | Powered by AI
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

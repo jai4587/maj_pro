@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+</head>
+
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title has-text-centered">Login</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="notification is-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="box" style="max-width: 400px; margin: auto;">
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="username" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" required>
+                    </div>
+                </div>
+
+                <div class="field has-text-centered">
+                    <button class="button is-primary" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+
+        <p class="has-text-centered">
+            Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.
+        </p>
+    </div>
+</section>
+</body>
+</html>

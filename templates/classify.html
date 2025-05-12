@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>car damaged detection using deep learning</title>
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <style>
+        /* Hero Section */
+        .hero {
+            background: url("static/images/car_insurance.jpg") center / cover no-repeat;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Prediction Box */
+        .prediction-details {
+            background: rgba(255, 255, 255, 0.15); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            color: white;
+            width: 80%;
+            margin: auto;
+        }
+
+        /* Title Styling */
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Buttons */
+        .button.is-custom {
+            font-size: 1.3rem;
+            border-radius: 8px;
+            padding: 10px 25px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button.is-custom:hover {
+            background: #ffdd57;
+            color: black;
+        }
+
+        /* Image Styling */
+        .pred_img {
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s;
+        }
+
+        .pred_img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="container">
+        <h1 class="title">
+            Car Insurance Prediction Based on Damage Detection
+        </h1>
+        <p class="subtitle">
+            Powered by <strong>Python & Flask</strong>
+        </p>
+
+        <!-- Prediction Section -->
+        <div class="columns is-vcentered is-centered">
+            <!-- Image Display -->
+            <div class="column is-one-third has-text-centered">
+                <img class="pred_img" src="{{ url_for('send_file', filename=image_file_name) }}" alt="Predicted Image">
+            </div>
+
+            <!-- Prediction Details -->
+            <div class="column is-one-third prediction-details">
+                <h2 class="title">
+                    This is a <span style="color:#ffdd57;">{{ label }}</span>
+                </h2>
+
+                <h2 style="font-size: 1.8rem;">
+                    Confidence: <span style="color:#ffdd57;">{{ prob }}</span>
+                </h2>
+
+                <div style="margin-top: 20px;">
+                    {% if label == 'normal' %}
+                        <p>Your car has <strong>no damage</strong>. No insurance claim needed.</p>
+                    {% elif label == 'moderate car damaged' %}
+                        <p>Your car has <strong>moderate damage</strong>. Estimated insurance cost: <strong>Rs. 20,000 - 1,00,000</strong>.</p>
+                    {% elif label == 'minor damaged car' %}
+                        <p>Your car has <strong>minor damage</strong>. Estimated insurance cost: <strong>Rs. 5,000 - 10,000</strong>.</p>
+                    {% else %}
+                        <p>Your car has <strong>severe damage</strong>. Estimated insurance cost: <strong>Rs. 1,00,000 - 5,00,000</strong>.</p>
+                    {% endif %}
+                </div>
+
+                <br>
+                <a href="/" class="button is-black is-custom is-inverted is-outlined">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>

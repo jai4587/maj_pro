@@ -1,0 +1,178 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Damage Assessment Result</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 2rem;
+                background-color: #f8f9fa;
+            }
+            .card {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .result-image {
+                max-height: 400px;
+                object-fit: contain;
+            }
+            .damage-normal {
+                color: green;
+                font-weight: bold;
+            }
+            .damage-minor {
+                color: #FFC107;
+                font-weight: bold;
+            }
+            .damage-moderate {
+                color: #FF9800;
+                font-weight: bold;
+            }
+            .damage-severe {
+                color: #F44336;
+                font-weight: bold;
+            }
+            .usd-price {
+                font-size: 0.8em;
+                color: #6c757d;
+            }
+            .btn-pdf {
+                background-color: #D32F2F;
+                color: white;
+            }
+            .btn-pdf:hover {
+                background-color: #B71C1C;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h2>Damage Assessment Result</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="text-center">
+                                        <img src="{{ vis_image }}" class="img-fluid rounded result-image" alt="Assessment Result">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header bg-info text-white">
+                                            <h4 class="mb-0">Damage Assessment</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <th>Damage Level:</th>
+                                                    <td class="
+                                                        {% if assessment.damage_assessment.predicted_class == 'normal' %}damage-normal
+                                                        {% elif assessment.damage_assessment.predicted_class == 'minor damaged car' %}damage-minor
+                                                        {% elif assessment.damage_assessment.predicted_class == 'moderate car damaged' %}damage-moderate
+                                                        {% else %}damage-severe{% endif %}
+                                                    ">
+                                                        {{ assessment.damage_assessment.predicted_class }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Confidence:</th>
+                                                    <td>{{ (assessment.damage_assessment.confidence * 100) | round(1) }}%</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Damage Multiplier:</th>
+                                                    <td>{{ assessment.damage_assessment.damage_multiplier }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Other Probabilities:</th>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            {% for class_name, prob in assessment.damage_assessment.class_probabilities.items() %}
+                                                                {% if class_name != assessment.damage_assessment.predicted_class %}
+                                                                    <li>{{ class_name }}: {{ (prob * 100) | round(1) }}%</li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header bg-success text-white">
+                                            <h4 class="mb-0">Cost Estimate</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <th>Car Details:</th>
+                                                    <td>
+                                                        {% if assessment.car_info %}
+                                                            {% if assessment.car_info.year %}{{ assessment.car_info.year }} {% endif %}
+                                                            {% if assessment.car_info.make %}{{ assessment.car_info.make }} {% endif %}
+                                                            {% if assessment.car_info.model %}{{ assessment.car_info.model }}{% endif %}
+                                                        {% else %}
+                                                            Not specified
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Car Value:</th>
+                                                    <td>
+                                                        INR {{ assessment.car_value_inr | round(2) }}
+                                                        <span class="usd-price">(${{ assessment.car_value | round(2) }})</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Base Repair Cost:</th>
+                                                    <td>
+                                                        INR {{ assessment.base_repair_cost_inr | round(2) }}
+                                                        <span class="usd-price">(${{ assessment.base_repair_cost | round(2) }})</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Cost Multiplier:</th>
+                                                    <td>{{ assessment.cost_multiplier }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Estimated Repair Cost:</th>
+                                                    <td class="h4 text-danger">
+                                                        INR {{ assessment.estimated_repair_cost_inr | round(2) }}
+                                                        <div class="usd-price">(${{ assessment.estimated_repair_cost | round(2) }})</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <a href="{{ url_for('index') }}" class="btn btn-primary">Analyze Another Image</a>
+                                <a href="{{ url_for('generate_pdf', filename=filename) }}" class="btn btn-pdf ms-2">
+                                    <i class="bi bi-file-pdf"></i> Download PDF Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    </body>
+    </html>
+    
